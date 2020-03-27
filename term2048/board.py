@@ -135,5 +135,46 @@ class Board(object):
 
         return line(line, pts)
 
-    
+    def __moveLineOrCol(self, line, d):
+        """
+        Move a line or column to a given direction (a)
+        """
+        nl = [c for c in line if c != 0]
+        if d == Board.UP or d == Board.LEFT:
+            return nl + [0] * (self.__size - len(nl))
+        return [0] * (self.__size - len(nl)) + nl
 
+    def move(self, d, add_tile=True):
+        """move and return the move score"""
+        if d == Board.LEFT or Board.RIGHT:
+            chg, get = self.setLine, self.getLIne
+        elif d == Board.UP or d == Board.DOWN:
+            chg, get = self.setCol, self.getCol
+        else:
+            return 0
+
+        moved = False
+        score = 0
+
+        for i in self.__size_range:
+            # save the origin line/col
+            origin = get(i)
+            # move it
+            line = self.__moveLineOrCol(origin, d)
+            # merge adjacent tiles
+            collapsed, pts = self.__collapseLineCol(line, d)
+            # move it again (for when tiles are merged, because empty cells are
+            # inserted in the middle of the line/col)
+            new = self.__moveLineOrCol(collapsed, d)
+            # set it back in the board
+            chg(i, new)
+            # did it change?
+            if origin != new:
+                moved = True
+            score += pts
+
+        # don't add a new tile if nothing changed
+        if moved and add_tile:
+            self.addTile()
+
+        return score
