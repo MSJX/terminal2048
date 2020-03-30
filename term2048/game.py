@@ -57,8 +57,8 @@ class Game(object):
     # these are color replacements for various modes
     __color_modes = {
         'dark': {
-            Fore.BULE: Fore.WHITE,
-            Fore.BULE + Style.BRIGHT: Fore.WHITE
+            Fore.BLUE: Fore.WHITE,
+            Fore.BLUE + Style.BRIGHT: Fore.WHITE
         },
         'light': {
             Fore.YELLOW: Fore.BLACK
@@ -286,7 +286,7 @@ class Game(object):
         if margins is None:
             margins = {}
         b = self.boardToString(margins=margins)
-        top = ' ' * margins.get('top', 0)
-        bottom = ' ' * margins.get('bottom', 0)
+        top = '\n' * margins.get('top', 0)
+        bottom = '\n' * margins.get('bottom', 0)
         scores = ' \tScore: %5d  Best: %5d\n' % (self.score, self.best_score)
         return top + b.replace('\n', scores, 1) + bottom

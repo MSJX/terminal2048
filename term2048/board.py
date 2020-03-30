@@ -92,7 +92,7 @@ class Board(object):
                 for x in self.__size_range
                 for y in self.__size_range if self.getCell(x, y) == 0]
 
-    def getLIne(self, y):
+    def getLine(self, y):
         """return the y-th line, starting at 0"""
         return self.cells[y]
 
@@ -102,13 +102,14 @@ class Board(object):
 
     def getCol(self, x):
         """return the x-th line, starting at 0"""
-        return self.cells[x]
+        return [self.getCell(x, i) for i in self.__size_range]
 
     def setCol(self, x, l):
         """set the x-th line, starting at 0"""
-        self.cells[x] = l[:]
+        for i in range(0, self.__size):
+            self.setCell(x, i, l[i])
 
-    def __collapseLineCol(self, line, d):
+    def __collapseLineOrCol(self, line, d):
         """
         Merge tiles in a line column according to a direction and return a
         tuple with the new line and the score for the move on this line
@@ -133,7 +134,7 @@ class Board(object):
                 line[i + inc] = 0
                 pts += v
 
-        return line(line, pts)
+        return line, pts
 
     def __moveLineOrCol(self, line, d):
         """
@@ -146,8 +147,8 @@ class Board(object):
 
     def move(self, d, add_tile=True):
         """move and return the move score"""
-        if d == Board.LEFT or Board.RIGHT:
-            chg, get = self.setLine, self.getLIne
+        if d == Board.LEFT or d == Board.RIGHT:
+            chg, get = self.setLine, self.getLine
         elif d == Board.UP or d == Board.DOWN:
             chg, get = self.setCol, self.getCol
         else:
@@ -162,7 +163,7 @@ class Board(object):
             # move it
             line = self.__moveLineOrCol(origin, d)
             # merge adjacent tiles
-            collapsed, pts = self.__collapseLineCol(line, d)
+            collapsed, pts = self.__collapseLineOrCol(line, d)
             # move it again (for when tiles are merged, because empty cells are
             # inserted in the middle of the line/col)
             new = self.__moveLineOrCol(collapsed, d)

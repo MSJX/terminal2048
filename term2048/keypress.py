@@ -46,10 +46,10 @@ else:
     UP, DOWN, RIGHT, LEFT = 65, 66, 67, 68
 
     __key_aliases = {
-        H: LEFT,
-        J: RIGHT,
         K: UP,
-        L: DOWN
+        J: DOWN,
+        L: RIGHT,
+        H: LEFT,
     }
 
 

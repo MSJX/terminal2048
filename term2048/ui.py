@@ -62,3 +62,4 @@ def start_game(debug=False):
         return game
 
     return game.loop()
+
