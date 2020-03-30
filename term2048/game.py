@@ -26,9 +26,9 @@ class Game(object):
     """
 
     __dirs = {
-        keypress.UP: Board.UP,
-        keypress.DOWN: Board.DOWN,
-        keypress.LEFT: Board.LEFT,
+        keypress.UP:    Board.UP,
+        keypress.DOWN:  Board.DOWN,
+        keypress.LEFT:  Board.LEFT,
         keypress.RIGHT: Board.RIGHT,
         keypress.SPACE: Board.PAUSE
     }
@@ -36,16 +36,16 @@ class Game(object):
     __is_windows = os.name == 'nt'
 
     COLORS = {
-        2: Fore.GREEN,
-        4: Fore.BLUE + Style.BRIGHT,
-        8: Fore.CYAN,
-        16: Fore.RED,
+        2:    Fore.GREEN,
+        4:    Fore.BLUE + Style.BRIGHT,
+        8:    Fore.CYAN,
+        16:   Fore.RED,
         # Don't use MAGENTA directly; it doesn't display well on Windows.
-        32: Fore.MAGENTA + Style.BRIGHT,
-        64: Fore.CYAN,
-        128: Fore.BLUE + Style.BRIGHT,
-        256: Fore.MAGENTA + Style.BRIGHT,
-        512: Fore.GREEN,
+        32:   Fore.MAGENTA + Style.BRIGHT,
+        64:   Fore.CYAN,
+        128:  Fore.BLUE + Style.BRIGHT,
+        256:  Fore.MAGENTA + Style.BRIGHT,
+        512:  Fore.GREEN,
         1024: Fore.RED,
         2048: Fore.YELLOW,
         # just in case people set an higher goal they still have colors
